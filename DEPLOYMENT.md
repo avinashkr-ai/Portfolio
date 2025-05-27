@@ -13,7 +13,7 @@
    - Push the `docs` folder to your repository
    - Go to GitHub repository settings
    - Enable GitHub Pages with source set to `docs` folder
-   - Your portfolio will be available at: `https://yourusername.github.io/portfolio/`
+   - Your portfolio will be available at: `https://rock12231.github.io/portfolio/`
 
 ### Manual Build Commands
 
