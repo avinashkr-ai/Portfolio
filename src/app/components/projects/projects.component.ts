@@ -7,13 +7,13 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="projects-container">
-      <div class="header-section animate-fadeInUp">
+      <div class="header-section">
         <h1 class="page-title text-gradient-primary">Featured Projects</h1>
         <p class="page-subtitle">Showcasing my technical expertise through innovative solutions</p>
       </div>
 
       <div class="projects-grid">
-        <div class="project-card card shadow-glow animate-fadeInUp" style="animation-delay: 0.2s">
+        <div class="project-card card shadow-glow">
           <div class="project-header">
             <div class="project-icon">
               <i class="fas fa-trophy"></i>
@@ -49,7 +49,7 @@ import { CommonModule } from '@angular/common';
           </div>
         </div>
 
-        <div class="project-card card shadow-glow-secondary animate-fadeInUp" style="animation-delay: 0.4s">
+        <div class="project-card card shadow-glow-secondary">
           <div class="project-header">
             <div class="project-icon">
               <i class="fas fa-search"></i>
@@ -85,7 +85,7 @@ import { CommonModule } from '@angular/common';
           </div>
         </div>
 
-        <div class="project-card card shadow-glow-accent animate-fadeInUp" style="animation-delay: 0.6s">
+        <div class="project-card card shadow-glow-accent">
           <div class="project-header">
             <div class="project-icon">
               <i class="fas fa-calendar-alt"></i>
@@ -121,7 +121,7 @@ import { CommonModule } from '@angular/common';
           </div>
         </div>
 
-        <div class="project-card card shadow-glow animate-fadeInUp" style="animation-delay: 0.8s">
+        <div class="project-card card shadow-glow">
           <div class="project-header">
             <div class="project-icon">
               <i class="fas fa-shield-alt"></i>
@@ -157,7 +157,7 @@ import { CommonModule } from '@angular/common';
           </div>
         </div>
 
-        <div class="project-card card shadow-glow-secondary animate-fadeInUp" style="animation-delay: 1.0s">
+        <div class="project-card card shadow-glow-secondary">
           <div class="project-header">
             <div class="project-icon">
               <i class="fas fa-heartbeat"></i>
@@ -210,8 +210,9 @@ import { CommonModule } from '@angular/common';
     }
 
     .page-title {
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
+      font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+      margin-bottom: var(--space-lg);
+      font-weight: 700;
     }
 
     .page-subtitle {
@@ -229,7 +230,6 @@ import { CommonModule } from '@angular/common';
 
     .project-card {
       padding: 2.5rem;
-      transition: var(--transition-normal);
       position: relative;
       overflow: hidden;
     }
@@ -261,7 +261,7 @@ import { CommonModule } from '@angular/common';
     }
 
     .project-card:hover {
-      transform: translateY(-10px) scale(1.02);
+      box-shadow: var(--shadow-3xl);
     }
 
     .project-header {
@@ -366,11 +366,9 @@ import { CommonModule } from '@angular/common';
       font-size: 0.85rem;
       font-weight: 500;
       box-shadow: var(--shadow-md);
-      transition: var(--transition-normal);
     }
 
     .tech-tag:hover {
-      transform: translateY(-2px);
       box-shadow: var(--shadow-lg);
     }
 

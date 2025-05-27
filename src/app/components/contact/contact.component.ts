@@ -8,9 +8,9 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="contact-container">
-      <div class="header-section animate-fadeInUp">
+      <div class="header-section">
         <div class="profile-section">
-          <div class="profile-image animate-float">
+          <div class="profile-image">
             <img src="profile.jpg" alt="Avinash Kumar" class="profile-img">
             <div class="profile-ring"></div>
           </div>
@@ -22,9 +22,9 @@ import { FormsModule } from '@angular/forms';
       </div>
 
       <div class="container-fluid">
-        <div class="row">
+      <div class="row">
           <!-- Send Message Section -->
-          <div class="col-lg-12 animate-fadeInUp" style="animation-delay: 0.2s">
+          <div class="col-lg-12">
             <div class="form-card card shadow-glow">
               <div class="form-header">
                 <div class="form-icon">
@@ -124,15 +124,15 @@ import { FormsModule } from '@angular/forms';
           </div>
 
           <!-- Contact Information Section -->
-          <div class="col-lg-12 animate-fadeInUp" style="animation-delay: 0.4s">
+          <div class="col-lg-12">
             <div class="info-card card shadow-glow-secondary">
               <div class="info-header">
                 <div class="info-icon">
                   <i class="fas fa-address-card"></i>
                 </div>
                 <h3 class="info-title text-gradient-secondary">Contact Information</h3>
-              </div>
-              
+        </div>
+
               <div class="contact-details">
                 <div class="contact-item">
                   <div class="contact-item-icon">
@@ -182,7 +182,7 @@ import { FormsModule } from '@angular/forms';
           </div>
 
           <!-- Connect With Me Section -->
-          <div class="col-lg-12 animate-fadeInUp" style="animation-delay: 0.6s">
+          <div class="col-lg-12">
             <div class="social-card card shadow-glow-accent">
               <div class="social-header">
                 <div class="social-icon">
@@ -274,7 +274,6 @@ import { FormsModule } from '@angular/forms';
       background: var(--gradient-secondary);
       mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       mask-composite: exclude;
-      animation: pulse 3s infinite;
     }
 
     .header-content {
@@ -282,9 +281,9 @@ import { FormsModule } from '@angular/forms';
     }
 
     .page-title {
-      font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
-      margin-bottom: var(--space-sm);
-      font-weight: 800;
+      font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+      margin-bottom: var(--space-lg);
+      font-weight: 700;
     }
 
     .page-subtitle {
@@ -378,7 +377,7 @@ import { FormsModule } from '@angular/forms';
     }
 
     .form-title, .info-title, .social-title {
-      font-size: var(--text-xl);
+      font-size: var(--text-lg);
       margin-bottom: var(--space-sm);
       font-weight: 700;
     }
@@ -497,12 +496,10 @@ import { FormsModule } from '@angular/forms';
       background: rgba(255, 255, 255, 0.03);
       border-radius: var(--radius-lg);
       border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: var(--transition-normal);
     }
 
     .contact-item:hover {
       background: rgba(255, 255, 255, 0.05);
-      transform: translateY(-2px);
       box-shadow: var(--shadow-lg);
     }
 
@@ -531,7 +528,6 @@ import { FormsModule } from '@angular/forms';
       color: var(--accent-color);
       text-decoration: none;
       font-size: var(--text-sm);
-      transition: var(--transition-normal);
     }
 
     .contact-link:hover {
@@ -561,48 +557,14 @@ import { FormsModule } from '@angular/forms';
       color: var(--gray-200);
       text-decoration: none;
       font-weight: 600;
-      transition: var(--transition-normal);
       position: relative;
       overflow: hidden;
     }
 
-    .social-link::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: var(--gradient-primary);
-      opacity: 0.1;
-      transition: var(--transition-normal);
-    }
-
-    .social-link:hover::before {
-      left: 0;
-    }
-
     .social-link:hover {
       color: var(--white-color);
-      transform: translateY(-4px);
       box-shadow: var(--shadow-xl);
       border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .social-link.github:hover::before {
-      background: #333;
-    }
-
-    .social-link.linkedin:hover::before {
-      background: #0077b5;
-    }
-
-    .social-link.email:hover::before {
-      background: var(--gradient-primary);
-    }
-
-    .social-link.phone:hover::before {
-      background: var(--gradient-accent);
     }
 
     .social-link i {
@@ -769,18 +731,18 @@ export class ContactComponent {
 
     // Simulate form submission
     setTimeout(() => {
-      console.log('Form submitted:', this.contact);
+    console.log('Form submitted:', this.contact);
 
       // Show success message
       this.showSuccessMessage = true;
 
-      // Reset form
-      this.contact = {
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      };
+    // Reset form
+    this.contact = {
+      name: '',
+      email: '',
+      subject: '',
+      message: ''
+    };
 
       this.isSubmitting = false;
 

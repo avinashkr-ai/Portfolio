@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
   imports: [CommonModule],
   template: `
     <div class="experience-container">
-      <div class="header-section animate-fadeInUp">
+      <div class="header-section">
         <h1 class="page-title text-gradient-primary">Professional Experience</h1>
         <p class="page-subtitle">My journey in the world of technology</p>
       </div>
@@ -19,9 +19,6 @@ import { takeUntil } from 'rxjs/operators';
         <div 
           class="timeline-item" 
           *ngFor="let exp of experiences; let i = index"
-          [class.animate-fadeInLeft]="i % 2 === 0"
-          [class.animate-fadeInRight]="i % 2 === 1"
-          [style.animation-delay]="(i * 0.2 + 0.2) + 's'"
         >
           <div class="timeline-marker">
             <div class="timeline-icon" [class]="getTimelineIconClass(i)">
@@ -76,12 +73,13 @@ import { takeUntil } from 'rxjs/operators';
     }
 
     .page-title {
-      font-size: 2.5rem;
-      margin-bottom: var(--space-md);
+      font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+      margin-bottom: var(--space-lg);
+      font-weight: 700;
     }
 
     .page-subtitle {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--gray-300);
       margin: 0;
     }
@@ -183,7 +181,7 @@ import { takeUntil } from 'rxjs/operators';
     }
 
     .job-title {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       margin-bottom: var(--space-sm);
     }
 
@@ -255,11 +253,9 @@ import { takeUntil } from 'rxjs/operators';
       font-size: 0.85rem;
       font-weight: 500;
       box-shadow: var(--shadow-sm);
-      transition: var(--transition-normal);
     }
 
     .tech-tag:hover {
-      transform: translateY(-2px);
       box-shadow: var(--shadow-lg);
     }
 

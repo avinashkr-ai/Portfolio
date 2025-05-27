@@ -10,8 +10,8 @@ import { takeUntil } from 'rxjs/operators';
   imports: [CommonModule],
   template: `
     <div class="about-container" *ngIf="personalInfo">
-      <div class="hero-section animate-fadeInUp">
-        <div class="profile-image animate-float">
+      <div class="hero-section">
+        <div class="profile-image">
           <img [src]="personalInfo.profileImage" [alt]="personalInfo.name" class="profile-img">
           <div class="profile-ring"></div>
         </div>
@@ -32,11 +32,11 @@ import { takeUntil } from 'rxjs/operators';
               <i class="fas fa-phone"></i>
               Call Me
             </a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="info-grid animate-fadeInUp" style="animation-delay: 0.3s">
+      <div class="info-grid">
         <div class="info-card card shadow-glow">
           <div class="info-icon">
             <i class="fas fa-map-marker-alt"></i>
@@ -48,25 +48,25 @@ import { takeUntil } from 'rxjs/operators';
         <div class="info-card card shadow-glow-secondary">
           <div class="info-icon">
             <i class="fab fa-github"></i>
-          </div>
+                </div>
           <h3>GitHub</h3>
           <a [href]="personalInfo.github" target="_blank" class="info-link">
             &#64;{{ getGitHubUsername(personalInfo.github) }}
           </a>
-        </div>
+                </div>
 
         <div class="info-card card shadow-glow-accent">
           <div class="info-icon">
             <i class="fab fa-linkedin"></i>
-          </div>
+              </div>
           <h3>LinkedIn</h3>
           <a [href]="personalInfo.linkedin" target="_blank" class="info-link">
             Connect with me
           </a>
-        </div>
-      </div>
+                </div>
+              </div>
 
-      <div class="about-content animate-fadeInUp" style="animation-delay: 0.6s">
+      <div class="about-content">
         <div class="content-section card">
           <h2 class="section-title text-gradient-primary">About Me</h2>
           <p class="about-text">
@@ -82,9 +82,9 @@ import { takeUntil } from 'rxjs/operators';
             When I'm not coding, I enjoy exploring new technologies, contributing to open-source 
             projects, and sharing knowledge with the developer community.
           </p>
-        </div>
-      </div>
-    </div>
+                </div>
+              </div>
+            </div>
 
     <!-- Loading state -->
     <div class="loading-container" *ngIf="!personalInfo">
@@ -102,10 +102,10 @@ import { takeUntil } from 'rxjs/operators';
     .hero-section {
       display: grid;
       grid-template-columns: auto 1fr;
-      gap: var(--space-2xl);
+      gap: var(--space-3xl);
       align-items: center;
       margin-bottom: var(--space-3xl);
-      padding: var(--space-2xl);
+      padding: var(--space-3xl);
       background: rgba(255, 255, 255, 0.03);
       border-radius: var(--radius-3xl);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -152,7 +152,6 @@ import { takeUntil } from 'rxjs/operators';
       background: var(--gradient-secondary);
       mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       mask-composite: exclude;
-      animation: pulse 4s infinite;
     }
 
     .hero-content {
@@ -161,19 +160,19 @@ import { takeUntil } from 'rxjs/operators';
     }
 
     .hero-title {
-      font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
-      margin-bottom: var(--space-md);
+      font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+      margin-bottom: var(--space-lg);
       line-height: 1.1;
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: -0.03em;
     }
 
     .hero-subtitle {
-      font-size: clamp(var(--text-lg), 2.5vw, var(--text-2xl));
+      font-size: clamp(var(--text-base), 2vw, var(--text-xl));
       margin-bottom: var(--space-lg);
       opacity: 0.95;
       font-weight: 600;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Comic Neue', sans-serif;
     }
 
     .hero-description {
@@ -201,7 +200,6 @@ import { takeUntil } from 'rxjs/operators';
     .info-card {
       text-align: center;
       padding: var(--space-2xl);
-      transition: var(--transition-normal);
       border-radius: var(--radius-2xl);
       position: relative;
       overflow: hidden;
@@ -227,13 +225,12 @@ import { takeUntil } from 'rxjs/operators';
     }
 
     .info-card:hover {
-      transform: translateY(-12px) scale(1.02);
       box-shadow: var(--shadow-3xl);
     }
 
     .info-icon {
-      width: 80px;
-      height: 80px;
+      width: 40px;
+      height: 40px;
       margin: 0 auto var(--space-lg);
       display: flex;
       align-items: center;
@@ -245,21 +242,6 @@ import { takeUntil } from 'rxjs/operators';
       box-shadow: var(--shadow-lg);
       position: relative;
       overflow: hidden;
-    }
-
-    .info-icon::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: var(--transition-normal);
-    }
-
-    .info-card:hover .info-icon::before {
-      left: 100%;
     }
 
     .info-card:nth-child(2) .info-icon {
@@ -288,7 +270,6 @@ import { takeUntil } from 'rxjs/operators';
       color: var(--accent-color);
       text-decoration: none;
       font-weight: 600;
-      transition: var(--transition-normal);
       position: relative;
     }
 
@@ -300,12 +281,10 @@ import { takeUntil } from 'rxjs/operators';
       width: 0;
       height: 2px;
       background: var(--gradient-primary);
-      transition: var(--transition-normal);
     }
 
     .info-link:hover {
       color: var(--primary-color);
-      transform: translateY(-1px);
     }
 
     .info-link:hover::after {
@@ -335,10 +314,10 @@ import { takeUntil } from 'rxjs/operators';
     }
 
     .section-title {
-      font-size: clamp(var(--text-2xl), 3vw, var(--text-4xl));
-      margin-bottom: var(--space-2xl);
+      font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+      margin-bottom: var(--space-lg);
       text-align: center;
-      font-weight: 800;
+      font-weight: 700;
     }
 
     .about-text {

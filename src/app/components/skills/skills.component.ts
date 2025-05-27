@@ -7,13 +7,13 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="skills-container">
-      <div class="header-section animate-fadeInUp">
+      <div class="header-section">
         <h1 class="page-title text-gradient-primary">Technical Skills</h1>
         <p class="page-subtitle">My expertise across various technologies and frameworks</p>
       </div>
 
       <div class="skills-grid">
-        <div class="skill-category card shadow-glow animate-fadeInLeft" style="animation-delay: 0.2s">
+        <div class="skill-category card shadow-glow">
           <div class="category-header">
             <div class="category-icon">
               <i class="fas fa-code"></i>
@@ -78,7 +78,7 @@ import { CommonModule } from '@angular/common';
           </div>
         </div>
 
-        <div class="skill-category card shadow-glow-secondary animate-fadeInUp" style="animation-delay: 0.4s">
+        <div class="skill-category card shadow-glow-secondary">
           <div class="category-header">
             <div class="category-icon">
               <i class="fas fa-server"></i>
@@ -143,7 +143,7 @@ import { CommonModule } from '@angular/common';
           </div>
         </div>
 
-        <div class="skill-category card shadow-glow-accent animate-fadeInRight" style="animation-delay: 0.6s">
+        <div class="skill-category card shadow-glow-accent">
           <div class="category-header">
             <div class="category-icon">
               <i class="fas fa-cloud"></i>
@@ -209,7 +209,7 @@ import { CommonModule } from '@angular/common';
         </div>
       </div>
 
-      <div class="additional-skills animate-fadeInUp" style="animation-delay: 0.8s">
+      <div class="additional-skills">
         <div class="card">
           <h3 class="section-title text-gradient-primary">Additional Technologies</h3>
           <div class="tech-tags">
@@ -248,8 +248,9 @@ import { CommonModule } from '@angular/common';
     }
 
     .page-title {
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
+      font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+      margin-bottom: var(--space-lg);
+      font-weight: 700;
     }
 
     .page-subtitle {
@@ -369,32 +370,12 @@ import { CommonModule } from '@angular/common';
       overflow: hidden;
     }
 
-    .skill-progress::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      animation: shimmer 2s infinite;
-    }
-
     .skill-progress.secondary {
       background: var(--gradient-secondary);
     }
 
     .skill-progress.accent {
       background: var(--gradient-accent);
-    }
-
-    @keyframes shimmer {
-      0% {
-        left: -100%;
-      }
-      100% {
-        left: 100%;
-      }
     }
 
     .additional-skills {
@@ -407,8 +388,9 @@ import { CommonModule } from '@angular/common';
     }
 
     .section-title {
-      font-size: 2rem;
-      margin-bottom: 2rem;
+      font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
+      margin-bottom: var(--space-lg);
+      font-weight: 700;
     }
 
     .tech-tags {
@@ -426,28 +408,11 @@ import { CommonModule } from '@angular/common';
       font-size: 0.9rem;
       font-weight: 500;
       box-shadow: var(--shadow-md);
-      transition: var(--transition-normal);
       position: relative;
       overflow: hidden;
     }
 
-    .tech-tag::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: var(--transition-normal);
-    }
-
-    .tech-tag:hover::before {
-      left: 100%;
-    }
-
     .tech-tag:hover {
-      transform: translateY(-3px);
       box-shadow: var(--shadow-lg);
     }
 
@@ -483,10 +448,6 @@ import { CommonModule } from '@angular/common';
         width: 60px;
         height: 60px;
         font-size: 1.5rem;
-      }
-
-      .page-title {
-        font-size: 2.5rem;
       }
 
       .tech-tags {
