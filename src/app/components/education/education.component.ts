@@ -32,7 +32,7 @@ import { CommonModule } from '@angular/common';
           <div class="education-details">
             <div class="grade-info">
               <span class="grade-label">CGPA:</span>
-              <span class="grade-value">7.77</span>
+              <!-- <span class="grade-value">7.77</span> -->
             </div>
             <p class="description">
               Specialized in advanced computer applications with focus on software development, 
@@ -67,7 +67,7 @@ import { CommonModule } from '@angular/common';
           <div class="education-details">
             <div class="grade-info">
               <span class="grade-label">Percentage:</span>
-              <span class="grade-value">61%</span>
+              <!-- <span class="grade-value">61%</span> -->
             </div>
             <p class="description">
               Foundation in computer science fundamentals including programming languages, 
