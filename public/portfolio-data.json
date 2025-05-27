@@ -1,0 +1,241 @@
+{
+  "personal": {
+    "name": "Avinash Kumar",
+    "title": "Full Stack Developer",
+    "location": "Gurgaon, Haryana",
+    "email": "avinashkumar2rock@gmail.com",
+    "phone": "+91 7071955977",
+    "github": "https://github.com/avinashkumar2rock",
+    "linkedin": "https://linkedin.com/in/avinashkumar2rock",
+    "profileImage": "profile.jpg",
+    "bio": "Passionate about creating innovative web solutions with modern technologies",
+    "description": "I am a passionate and dedicated web developer with extensive experience in building modern, scalable web applications. My expertise spans across frontend and backend technologies, with a strong focus on creating user-centric solutions."
+  },
+  "experience": [
+    {
+      "id": 1,
+      "title": "Software Developer",
+      "company": "Riveyra Infotech",
+      "location": "Gurgaon, Haryana",
+      "duration": "Oct 2023 - Present",
+      "type": "Full-time",
+      "technologies": ["Angular", "Node.js", "Python", "MongoDB", "Express.js"],
+      "description": "Developing and maintaining web applications using modern technologies. Working on both frontend and backend development with focus on performance optimization and user experience.",
+      "achievements": [
+        "Improved application performance by 40%",
+        "Led a team of 3 developers",
+        "Implemented CI/CD pipelines"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Django Full Stack Trainer",
+      "company": "Infoclad Solution",
+      "location": "Remote",
+      "duration": "July 2021 - Dec 2021",
+      "type": "Contract",
+      "technologies": ["Django", "Python", "PostgreSQL", "HTML", "CSS", "JavaScript"],
+      "description": "Conducted comprehensive training sessions on Django framework and full-stack development. Mentored students and professionals in web development best practices.",
+      "achievements": [
+        "Trained 50+ students",
+        "Developed comprehensive curriculum",
+        "Achieved 95% student satisfaction rate"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Angular Frontend Developer",
+      "company": "Mydocent",
+      "location": "Remote",
+      "duration": "Jan 2020 - June 2021",
+      "type": "Internship",
+      "technologies": ["Angular", "TypeScript", "RxJS", "Bootstrap", "SCSS"],
+      "description": "Developed responsive web applications using Angular framework. Collaborated with design team to implement user interfaces and improve user experience.",
+      "achievements": [
+        "Built 5+ responsive web applications",
+        "Reduced load time by 30%",
+        "Implemented responsive design patterns"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "ChallengeX",
+      "description": "AI-powered platform for coding challenges and skill assessment with real-time evaluation and personalized learning paths.",
+      "technologies": ["Angular", "Flask", "Firebase", "AI/ML", "Python"],
+      "features": [
+        "Real-time code evaluation",
+        "AI-powered skill assessment",
+        "Personalized learning paths",
+        "Interactive coding challenges"
+      ],
+      "github": "https://github.com/avinashkumar2rock/challengex",
+      "demo": "https://challengex-demo.com",
+      "image": "challengex.jpg",
+      "status": "Completed"
+    },
+    {
+      "id": 2,
+      "title": "Godrej AI",
+      "description": "Advanced AI search and summarization platform for enterprise document management and knowledge discovery.",
+      "technologies": ["Python", "AI/ML", "NLP", "FastAPI", "PostgreSQL"],
+      "features": [
+        "Intelligent document search",
+        "AI-powered summarization",
+        "Natural language processing",
+        "Enterprise integration"
+      ],
+      "github": "https://github.com/avinashkumar2rock/godrej-ai",
+      "demo": "https://godrej-ai-demo.com",
+      "image": "godrej-ai.jpg",
+      "status": "Completed"
+    },
+    {
+      "id": 3,
+      "title": "Event Management System",
+      "description": "Comprehensive event management platform with QR code integration for seamless event organization and attendee management.",
+      "technologies": ["Angular", "Flask", "Firebase", "QR Code", "Payment Gateway"],
+      "features": [
+        "Event creation and management",
+        "QR code ticket generation",
+        "Payment integration",
+        "Real-time analytics"
+      ],
+      "github": "https://github.com/avinashkumar2rock/event-management",
+      "demo": "https://event-mgmt-demo.com",
+      "image": "event-management.jpg",
+      "status": "Completed"
+    },
+    {
+      "id": 4,
+      "title": "CrimeDekho",
+      "description": "Crime analysis and visualization platform using CCTNS data for law enforcement and public safety insights.",
+      "technologies": ["Django", "Python", "Data Analytics", "Chart.js", "PostgreSQL"],
+      "features": [
+        "Crime data visualization",
+        "Statistical analysis",
+        "Geographic mapping",
+        "Trend prediction"
+      ],
+      "github": "https://github.com/avinashkumar2rock/crimedekho",
+      "demo": "https://crimedekho-demo.com",
+      "image": "crimedekho.jpg",
+      "status": "Completed"
+    },
+    {
+      "id": 5,
+      "title": "HealthX",
+      "description": "Comprehensive health management platform for patient records, appointment scheduling, and telemedicine services.",
+      "technologies": ["Django", "Python", "PostgreSQL", "Bootstrap", "Chart.js"],
+      "features": [
+        "Patient record management",
+        "Appointment scheduling",
+        "Telemedicine integration",
+        "Health analytics"
+      ],
+      "github": "https://github.com/avinashkumar2rock/healthx",
+      "demo": "https://healthx-demo.com",
+      "image": "healthx.jpg",
+      "status": "Completed"
+    }
+  ],
+  "education": [
+    {
+      "id": 1,
+      "degree": "Master of Computer Application",
+      "institution": "HBTU (Harcourt Butler Technical University)",
+      "location": "Kanpur, UP",
+      "duration": "2021 - 2023",
+      "grade": "7.77 CGPA",
+      "description": "Specialized in software engineering, data structures, algorithms, and modern web technologies."
+    },
+    {
+      "id": 2,
+      "degree": "Bachelor of Computer Application",
+      "institution": "CSJMU UIET (Chhatrapati Shahu Ji Maharaj University)",
+      "location": "Kanpur, UP",
+      "duration": "2015 - 2018",
+      "grade": "61%",
+      "description": "Foundation in computer science, programming languages, database management, and software development."
+    }
+  ],
+  "certifications": [
+    {
+      "id": 1,
+      "title": "ROBO QUEST/GAMES",
+      "issuer": "Technical Competition",
+      "year": "2022",
+      "description": "Winner in robotics and gaming competition"
+    },
+    {
+      "id": 2,
+      "title": "Hackathon Winner",
+      "issuer": "Various Platforms",
+      "year": "2021-2023",
+      "description": "Multiple hackathon wins and achievements"
+    }
+  ],
+  "skills": {
+    "languages": [
+      { "name": "JavaScript", "proficiency": 90 },
+      { "name": "TypeScript", "proficiency": 85 },
+      { "name": "Python", "proficiency": 88 },
+      { "name": "HTML5", "proficiency": 95 },
+      { "name": "CSS3", "proficiency": 90 },
+      { "name": "SQL", "proficiency": 80 }
+    ],
+    "frameworks": [
+      { "name": "Angular", "proficiency": 90 },
+      { "name": "Django", "proficiency": 85 },
+      { "name": "Flask", "proficiency": 80 },
+      { "name": "Node.js", "proficiency": 75 },
+      { "name": "Express.js", "proficiency": 70 },
+      { "name": "Bootstrap", "proficiency": 85 }
+    ],
+    "backend": [
+      { "name": "Django REST Framework", "proficiency": 85 },
+      { "name": "FastAPI", "proficiency": 75 },
+      { "name": "PostgreSQL", "proficiency": 80 },
+      { "name": "MongoDB", "proficiency": 70 },
+      { "name": "Redis", "proficiency": 65 },
+      { "name": "Celery", "proficiency": 70 }
+    ],
+    "cloud": [
+      { "name": "Firebase", "proficiency": 80 },
+      { "name": "AWS", "proficiency": 70 },
+      { "name": "Docker", "proficiency": 75 },
+      { "name": "Git", "proficiency": 85 },
+      { "name": "CI/CD", "proficiency": 70 },
+      { "name": "Linux", "proficiency": 75 }
+    ]
+  },
+  "contact": {
+    "email": "avinashkumar2rock@gmail.com",
+    "phone": "+91 7071955977",
+    "location": "Gurgaon, Haryana, India",
+    "responseTime": "Within 24 hours",
+    "socialLinks": [
+      {
+        "platform": "GitHub",
+        "url": "https://github.com/avinashkumar2rock",
+        "icon": "fab fa-github"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://linkedin.com/in/avinashkumar2rock",
+        "icon": "fab fa-linkedin"
+      },
+      {
+        "platform": "Email",
+        "url": "mailto:avinashkumar2rock@gmail.com",
+        "icon": "fas fa-envelope"
+      },
+      {
+        "platform": "Phone",
+        "url": "tel:+917071955977",
+        "icon": "fas fa-phone"
+      }
+    ]
+  }
+} 
