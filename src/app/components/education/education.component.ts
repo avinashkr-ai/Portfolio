@@ -30,10 +30,10 @@ import { CommonModule } from '@angular/common';
             </div>
           </div>
           <div class="education-details">
-            <div class="grade-info">
+            <!-- <div class="grade-info">
               <span class="grade-label">CGPA:</span>
-              <!-- <span class="grade-value">7.77</span> -->
-            </div>
+              <span class="grade-value">7.77</span>
+            </div> -->
             <p class="description">
               Specialized in advanced computer applications with focus on software development, 
               database management, and modern programming paradigms. Completed comprehensive 
@@ -65,10 +65,10 @@ import { CommonModule } from '@angular/common';
             </div>
           </div>
           <div class="education-details">
-            <div class="grade-info">
+            <!-- <div class="grade-info">
               <span class="grade-label">Percentage:</span>
-              <!-- <span class="grade-value">61%</span> -->
-            </div>
+              <span class="grade-value">61%</span>
+            </div> -->
             <p class="description">
               Foundation in computer science fundamentals including programming languages, 
               computer networks, and software development methodologies. Built strong 
