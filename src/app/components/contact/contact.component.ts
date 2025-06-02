@@ -186,12 +186,13 @@ import { takeUntil } from 'rxjs/operators';
 
           <!-- Connect With Me Section -->
           <div class="col-lg-12" *ngIf="contactInfo">
-            <div class="social-card card shadow-glow-accent">
+            <div class="social-card card">
               <div class="social-header">
                 <div class="social-icon">
                   <i class="fas fa-share-alt"></i>
+                  <div class="icon-glow"></div>
                 </div>
-                <h3 class="social-title text-gradient-accent">Connect With Me</h3>
+                <h3 class="social-title">Connect With Me</h3>
                 <p class="social-subtitle">Let's stay connected and share ideas</p>
               </div>
               
@@ -224,6 +225,7 @@ import { takeUntil } from 'rxjs/operators';
                 <div class="stat-item">
                   <div class="stat-icon">
                     <i class="fas fa-users"></i>
+                    <div class="icon-glow"></div>
                   </div>
                   <div class="stat-content">
                     <span class="stat-value">500+</span>
@@ -233,6 +235,7 @@ import { takeUntil } from 'rxjs/operators';
                 <div class="stat-item">
                   <div class="stat-icon">
                     <i class="fas fa-code-branch"></i>
+                    <div class="icon-glow"></div>
                   </div>
                   <div class="stat-content">
                     <span class="stat-value">100+</span>
@@ -242,6 +245,7 @@ import { takeUntil } from 'rxjs/operators';
                 <div class="stat-item">
                   <div class="stat-icon">
                     <i class="fas fa-star"></i>
+                    <div class="icon-glow"></div>
                   </div>
                   <div class="stat-content">
                     <span class="stat-value">1k+</span>

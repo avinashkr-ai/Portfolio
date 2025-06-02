@@ -19,7 +19,7 @@ import { filter } from 'rxjs/operators';
           </div>
           <div class="brand-content">
             <span class="brand-text">Avinash Kumar</span>
-            <span class="brand-subtitle">Portfolio</span>
+            <!-- <span class="brand-subtitle">Portfolio</span> -->
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@ import { filter } from 'rxjs/operators';
           </div>
           <div class="profile-info">
             <h4 class="profile-name">Avinash Kumar</h4>
-            <p class="profile-title">Full Stack Developer</p>
+            <p class="profile-title">Full Stack AI Developer</p>
             <div class="profile-stats">
               <div class="stat-item">
                 <span class="stat-number">3+</span>
@@ -88,9 +88,9 @@ import { filter } from 'rxjs/operators';
               <i class="fas fa-envelope"></i>
             </a>
           </div>
-          <div class="footer-text">
+          <!-- <div class="footer-text">
             <p>&copy; 2024 Avinash Kumar</p>
-          </div>
+          </div> -->
         </div>
         <div class="toggle-btn" (click)="onToggle()" *ngIf="!isMobile">
           <i class="fas" [class.fa-chevron-left]="isOpen" [class.fa-chevron-right]="!isOpen"></i>
