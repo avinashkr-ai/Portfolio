@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PortfolioService, PersonalInfo, ContactInfo } from '../../services/portfolio.service';
@@ -265,6 +265,18 @@ import { takeUntil } from 'rxjs/operators';
           <p>Loading contact information...</p>
         </div>
       </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" (click)="toggleSidebar()">
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
+    </button>
+
+    <!-- Mobile Menu Toggle Button -->
+    <div class="menu-toggle-btn" (click)="toggleSidebar()">
+      <i class="fas fa-bars"></i>
     </div>
   `,
   styles: [`
@@ -852,28 +864,109 @@ import { takeUntil } from 'rxjs/operators';
 
     /* Responsive design */
     @media (max-width: 768px) {
+      .contact-container {
+        padding: var(--space-md) 0;
+      }
+
+      .header-section {
+        margin-bottom: var(--space-xl);
+        padding: var(--space-lg);
+      }
+
       .profile-section {
         flex-direction: column;
         text-align: center;
-        gap: var(--space-lg);
+        gap: var(--space-md);
       }
 
       .profile-image {
-        width: 100px;
-        height: 100px;
+        width: 90px;
+        height: 90px;
+      }
+
+      .profile-ring {
+        top: -6px;
+        left: -6px;
+        right: -6px;
+        bottom: -6px;
+      }
+
+      .header-content {
+        text-align: center;
       }
 
       .page-title {
         font-size: var(--text-2xl);
+        margin-bottom: var(--space-sm);
       }
 
-      .form-row {
-        grid-template-columns: 1fr;
-        gap: 0;
+      .page-subtitle {
+        font-size: var(--text-sm);
+      }
+
+      .container-fluid {
+        padding: 0 var(--space-sm);
+      }
+
+      .row {
+        margin: 0;
+      }
+
+      .row > [class*="col-"] {
+        padding: 0;
+        margin-bottom: var(--space-lg);
       }
 
       .form-card, .info-card, .social-card {
         padding: var(--space-lg);
+        margin: 0 var(--space-sm);
+      }
+
+      .form-header, .info-header, .social-header {
+        margin-bottom: var(--space-lg);
+      }
+
+      .form-icon, .info-icon, .social-icon {
+        width: 50px;
+        height: 50px;
+        font-size: var(--text-lg);
+      }
+
+      .form-title, .info-title, .social-title {
+        font-size: var(--text-base);
+      }
+
+      .form-subtitle, .social-subtitle {
+        font-size: var(--text-xs);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+        margin-bottom: var(--space-md);
+      }
+
+      .form-group {
+        margin-bottom: var(--space-md);
+      }
+
+      .form-label {
+        font-size: var(--text-xs);
+      }
+
+      .form-control {
+        padding: var(--space-sm) var(--space-md);
+        font-size: var(--text-sm);
+      }
+
+      .btn-send {
+        padding: var(--space-sm) var(--space-md);
+        font-size: var(--text-sm);
+        margin-top: var(--space-md);
+      }
+
+      .contact-details {
+        gap: var(--space-md);
       }
 
       .contact-item {
@@ -887,40 +980,76 @@ import { takeUntil } from 'rxjs/operators';
         font-size: var(--text-base);
       }
 
+      .contact-item-content h4 {
+        font-size: var(--text-sm);
+      }
+
+      .contact-link, .contact-text {
+        font-size: var(--text-xs);
+      }
+
       .social-links {
         grid-template-columns: 1fr;
+        gap: var(--space-md);
+        margin-bottom: var(--space-lg);
+      }
+
+      .social-link {
+        padding: var(--space-md);
+        gap: var(--space-md);
+      }
+
+      .social-icon-wrapper {
+        width: 45px;
+        height: 45px;
+      }
+
+      .social-icon-wrapper i {
+        font-size: var(--text-lg);
+      }
+
+      .social-platform {
+        font-size: var(--text-base);
+      }
+
+      .social-handle {
+        font-size: var(--text-xs);
       }
 
       .social-stats {
         grid-template-columns: 1fr;
+        gap: var(--space-md);
+        padding-top: var(--space-lg);
       }
 
-      .social-link {
-        padding: var(--space-lg);
+      .stat-item {
+        padding: var(--space-md);
+        gap: var(--space-md);
       }
 
-      .social-icon-wrapper {
+      .stat-icon {
         width: 40px;
         height: 40px;
+        font-size: var(--text-base);
       }
 
-      .container-fluid {
-        padding: 0 var(--space-md);
+      .stat-value {
+        font-size: var(--text-lg);
       }
 
-      .row {
-        margin: 0 -var(--space-sm);
-      }
-
-      .row > [class*="col-"] {
-        padding: 0 var(--space-sm);
-        margin-bottom: var(--space-xl);
+      .stat-label {
+        font-size: var(--text-xs);
       }
     }
 
     @media (max-width: 480px) {
+      .contact-container {
+        padding: var(--space-sm) 0;
+      }
+
       .header-section {
-        padding: var(--space-lg);
+        padding: var(--space-md);
+        margin-bottom: var(--space-lg);
       }
 
       .profile-image {
@@ -930,6 +1059,18 @@ import { takeUntil } from 'rxjs/operators';
 
       .form-card, .info-card, .social-card {
         padding: var(--space-md);
+        margin: 0;
+        border-radius: var(--radius-lg);
+      }
+
+      .form-icon, .info-icon, .social-icon {
+        width: 45px;
+        height: 45px;
+        font-size: var(--text-base);
+      }
+
+      .form-control {
+        padding: var(--space-xs) var(--space-sm);
       }
 
       .contact-item {
@@ -937,9 +1078,238 @@ import { takeUntil } from 'rxjs/operators';
         gap: var(--space-sm);
       }
 
+      .contact-item-icon {
+        width: 35px;
+        height: 35px;
+        font-size: var(--text-sm);
+      }
+
       .social-link {
         padding: var(--space-sm);
         gap: var(--space-sm);
+      }
+
+      .social-icon-wrapper {
+        width: 40px;
+        height: 40px;
+      }
+
+      .social-icon-wrapper i {
+        font-size: var(--text-base);
+      }
+
+      .stat-item {
+        padding: var(--space-sm);
+        gap: var(--space-sm);
+      }
+
+      .stat-icon {
+        width: 35px;
+        height: 35px;
+        font-size: var(--text-sm);
+      }
+
+      /* Improve touch targets */
+      .btn-send, 
+      .social-link, 
+      .contact-link {
+        min-height: 44px;
+      }
+
+      .form-control,
+      .btn-send,
+      .social-link,
+      .contact-item {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Add active states for touch */
+      .btn-send:active,
+      .social-link:active,
+      .contact-item:active {
+        transform: scale(0.98);
+      }
+
+      /* Improve form input on mobile */
+      input[type="email"],
+      input[type="tel"],
+      input[type="text"] {
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+
+      /* Add pull-to-refresh visual feedback */
+      .contact-container {
+        overscroll-behavior-y: contain;
+      }
+    }
+
+    /* Add smooth scrolling for mobile */
+    @media (hover: none) {
+      .social-link:hover,
+      .contact-item:hover,
+      .stat-item:hover {
+        transform: none;
+      }
+
+      .social-link:active,
+      .contact-item:active,
+      .stat-item:active {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    /* Improve loading state on mobile */
+    .loading-container {
+      min-height: 200px;
+      padding: var(--space-lg);
+    }
+
+    .loading-spinner i {
+      font-size: var(--text-2xl);
+    }
+
+    .loading-spinner p {
+      font-size: var(--text-sm);
+    }
+
+    /* Mobile Menu Button Styles */
+    .mobile-menu-btn {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+      width: 45px;
+      height: 45px;
+      background: var(--gradient-primary);
+      border: none;
+      border-radius: var(--radius-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .mobile-menu-btn.active {
+      left: 280px;
+      background: var(--gradient-accent);
+    }
+
+    .mobile-menu-btn.active .hamburger-line:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .mobile-menu-btn.active .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-btn.active .hamburger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .hamburger-line {
+      width: 20px;
+      height: 2px;
+      background: var(--white-color);
+      border-radius: var(--radius-full);
+      transition: all 0.3s ease;
+    }
+
+    /* Mobile Menu Toggle Button */
+    .menu-toggle-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 35px;
+      height: 35px;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--white-color);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar:not(.collapsed) .menu-toggle-btn {
+      opacity: 1;
+    }
+
+    .menu-toggle-btn i {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-toggle-btn:hover i {
+      transform: rotate(90deg);
+    }
+
+    /* Mobile Menu Button Animation */
+    @keyframes menuButtonSlide {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    .mobile-menu-btn {
+      animation: menuButtonSlide 0.3s ease forwards;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        width: 40px;
+        height: 40px;
+      }
+
+      .mobile-menu-btn.active {
+        left: 260px;
+      }
+
+      .hamburger-line {
+        width: 18px;
+      }
+
+      .menu-toggle-btn {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .mobile-menu-btn {
+        width: 35px;
+        height: 35px;
+        top: 0.75rem;
+        left: 0.75rem;
+      }
+
+      .mobile-menu-btn.active {
+        left: 240px;
+      }
+
+      .hamburger-line {
+        width: 16px;
+      }
+
+      .menu-toggle-btn {
+        width: 28px;
+        height: 28px;
+        top: 0.75rem;
+        right: 0.75rem;
       }
     }
   `]
@@ -954,6 +1324,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   isSubmitting = false;
   showSuccessMessage = false;
+  isSidebarCollapsed = false;
 
   personalInfo: PersonalInfo | null = null;
   contactInfo: ContactInfo | null = null;
@@ -1018,5 +1389,52 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   getSocialLinkClass(platform: string): string {
     return platform.toLowerCase();
+  }
+
+  toggleSidebar() {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+    // You can emit this state to a service or parent component if needed
+    const sidebar = document.querySelector('.sidebar');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (sidebar) {
+      sidebar.classList.toggle('collapsed');
+    }
+    if (mobileMenuBtn) {
+      mobileMenuBtn.classList.toggle('active');
+    }
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    if (window.innerWidth <= 768) {
+      // Auto collapse sidebar on mobile when navigating
+      this.isSidebarCollapsed = true;
+      const sidebar = document.querySelector('.sidebar');
+      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+      
+      if (sidebar) {
+        sidebar.classList.add('collapsed');
+      }
+      if (mobileMenuBtn) {
+        mobileMenuBtn.classList.remove('active');
+      }
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    // Auto collapse sidebar when clicking outside on mobile
+    if (window.innerWidth <= 768) {
+      const sidebar = document.querySelector('.sidebar');
+      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+      
+      if (sidebar && !sidebar.contains(event.target as Node) && 
+          mobileMenuBtn && !mobileMenuBtn.contains(event.target as Node)) {
+        this.isSidebarCollapsed = true;
+        sidebar.classList.add('collapsed');
+        mobileMenuBtn.classList.remove('active');
+      }
+    }
   }
 }
