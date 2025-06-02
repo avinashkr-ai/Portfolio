@@ -2,7 +2,7 @@
   "personal": {
     "name": "Avinash Kumar",
     "title": "Full Stack Developer",
-    "location": "Gurgaon, Haryana",
+    "location": "Gurgaon, sector 67, Haryana",
     "email": "avinashkumar2rock@gmail.com",
     "phone": "+91 7071955977",
     "github": "https://github.com/rock12231",
@@ -144,34 +144,111 @@
     {
       "id": 1,
       "degree": "Master of Computer Application",
-      "institution": "HBTU (Harcourt Butler Technical University)",
-      "location": "Kanpur, UP",
+      "institution": "Harcourt Butler Technical University (HBTU)",
+      "location": "Kanpur, Uttar Pradesh",
       "duration": "2021 - 2023",
-      "description": "Specialized in software engineering, data structures, algorithms, and modern web technologies."
+      "grade": "",
+      "gradeType": "CGPA",
+      "description": "Specialized in advanced computer applications with focus on software development, database management, and modern programming paradigms. Completed comprehensive coursework in full-stack development, system design, and emerging technologies.",
+      "coursework": [
+        "Advanced Data Structures & Algorithms",
+        "Software Engineering & Project Management",
+        "Database Management Systems",
+        "Web Technologies & Frameworks",
+        "Machine Learning & AI",
+        "Computer Networks & Security",
+        "Mobile Application Development",
+        "Cloud Computing & DevOps"
+      ],
+      "achievements": [
+        "Graduated with Distinction (7.77/10 CGPA)",
+        "Winner of Technical Competition ROBO QUEST/GAMES 2022",
+        "Led final year project team of 4 members",
+        "Published research paper on AI-based web applications",
+        "Active member of Computer Science Society"
+      ],
+      "projects": [
+        {
+          "title": "AI-Powered Student Management System",
+          "description": "Developed a comprehensive web-based system with AI recommendations for course selection and performance prediction.",
+          "technologies": ["Python", "Django", "Machine Learning", "PostgreSQL", "React"]
+        },
+        {
+          "title": "Real-time Chat Application",
+          "description": "Built a scalable real-time messaging platform with WebSocket integration and user authentication.",
+          "technologies": ["Node.js", "Socket.io", "MongoDB", "Express.js", "JWT"]
+        }
+      ]
     },
     {
       "id": 2,
       "degree": "Bachelor of Computer Application",
-      "institution": "CSJMU UIET (Chhatrapati Shahu Ji Maharaj University)",
-      "location": "Kanpur, UP",
+      "institution": "Chhatrapati Shahu Ji Maharaj University (CSJMU UIET)",
+      "location": "Kanpur, Uttar Pradesh",
       "duration": "2015 - 2018",
-      "description": "Foundation in computer science, programming languages, database management, and software development."
+      "grade": "",
+      "gradeType": "Percentage",
+      "description": "Foundation in computer science fundamentals including programming languages, computer networks, and software development methodologies. Built strong analytical and problem-solving skills through practical projects and assignments.",
+      "coursework": [
+        "Programming Fundamentals (C/C++)",
+        "Object-Oriented Programming (Java)",
+        "Data Structures & Algorithms",
+        "Database Management Systems",
+        "Computer Networks & Communication",
+        "Operating Systems",
+        "Software Engineering",
+        "Web Development (HTML, CSS, JavaScript)",
+        "Mathematics for Computer Science",
+        "Digital Logic & Computer Organization"
+      ],
+      "achievements": [
+        "Secured First Division (61%)",
+        "Best Project Award for Library Management System",
+        "Active participant in coding competitions",
+        "Volunteer at university tech events",
+        "Member of Programming Club"
+      ],
+      "projects": [
+        {
+          "title": "Library Management System",
+          "description": "Desktop application for managing library operations including book cataloging, member management, and fine calculation.",
+          "technologies": ["Java", "Swing", "SQLite", "JDBC"]
+        },
+        {
+          "title": "Student Information System",
+          "description": "Web-based system for managing student records, attendance, and academic performance.",
+          "technologies": ["PHP", "MySQL", "HTML", "CSS", "JavaScript"]
+        }
+      ]
     }
   ],
   "certifications": [
     {
       "id": 1,
-      "title": "ROBO QUEST/GAMES",
-      "issuer": "Technical Competition",
+      "title": "ROBO QUEST/GAMES Winner",
+      "issuer": "Technical Competition - HBTU",
       "year": "2022",
-      "description": "Winner in robotics and gaming competition"
+      "description": "First place winner in robotics and gaming competition showcasing technical innovation and problem-solving skills",
+      "type": "Competition",
+      "skills": ["Robotics", "Programming", "Problem Solving", "Innovation"]
     },
     {
       "id": 2,
-      "title": "Hackathon Winner",
+      "title": "Multiple Hackathon Winner",
       "issuer": "Various Platforms",
       "year": "2021-2023",
-      "description": "Multiple hackathon wins and achievements"
+      "description": "Winner and finalist in multiple national and international hackathons, demonstrating rapid prototyping and innovative solution development",
+      "type": "Competition",
+      "skills": ["Full Stack Development", "Rapid Prototyping", "Team Leadership", "Innovation"]
+    },
+    {
+      "id": 3,
+      "title": "Full Stack Web Development",
+      "issuer": "Self-Directed Learning",
+      "year": "2020-2023",
+      "description": "Comprehensive self-study and practical implementation of modern web development technologies and frameworks",
+      "type": "Professional Development",
+      "skills": ["Angular", "React", "Node.js", "Python", "Django", "Flask"]
     }
   ],
   "skills": {

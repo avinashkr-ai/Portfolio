@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PortfolioService, PersonalInfo, ContactInfo } from '../../services/portfolio.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-contact',
@@ -8,10 +11,10 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="contact-container">
-      <div class="header-section">
+      <div class="header-section" *ngIf="personalInfo">
         <div class="profile-section">
           <div class="profile-image">
-            <img src="profile.jpg" alt="Avinash Kumar" class="profile-img">
+            <img [src]="personalInfo.profileImage" [alt]="personalInfo.name" class="profile-img">
             <div class="profile-ring"></div>
           </div>
           <div class="header-content">
@@ -124,7 +127,7 @@ import { FormsModule } from '@angular/forms';
           </div>
 
           <!-- Contact Information Section -->
-          <div class="col-lg-12">
+          <div class="col-lg-12" *ngIf="contactInfo">
             <div class="info-card card shadow-glow-secondary">
               <div class="info-header">
                 <div class="info-icon">
@@ -140,8 +143,8 @@ import { FormsModule } from '@angular/forms';
                   </div>
                   <div class="contact-item-content">
                     <h4>Email</h4>
-                    <a href="mailto:avinashkumar2rock&#64;gmail.com" class="contact-link">
-                      avinashkumar2rock&#64;gmail.com
+                    <a [href]="'mailto:' + contactInfo.email" class="contact-link">
+                      {{ contactInfo.email }}
                     </a>
                   </div>
                 </div>
@@ -152,8 +155,8 @@ import { FormsModule } from '@angular/forms';
                   </div>
                   <div class="contact-item-content">
                     <h4>Phone</h4>
-                    <a href="tel:+917071955977" class="contact-link">
-                      +91 7071955977
+                    <a [href]="'tel:' + contactInfo.phone" class="contact-link">
+                      {{ contactInfo.phone }}
                     </a>
                   </div>
                 </div>
@@ -164,7 +167,7 @@ import { FormsModule } from '@angular/forms';
                   </div>
                   <div class="contact-item-content">
                     <h4>Location</h4>
-                    <span class="contact-text">Gurgaon, Haryana, India</span>
+                    <span class="contact-text">{{ contactInfo.location }}</span>
                   </div>
                 </div>
 
@@ -174,7 +177,7 @@ import { FormsModule } from '@angular/forms';
                   </div>
                   <div class="contact-item-content">
                     <h4>Response Time</h4>
-                    <span class="contact-text">Within 24 hours</span>
+                    <span class="contact-text">{{ contactInfo.responseTime }}</span>
                   </div>
                 </div>
               </div>
@@ -182,45 +185,80 @@ import { FormsModule } from '@angular/forms';
           </div>
 
           <!-- Connect With Me Section -->
-          <div class="col-lg-12">
+          <div class="col-lg-12" *ngIf="contactInfo">
             <div class="social-card card shadow-glow-accent">
               <div class="social-header">
                 <div class="social-icon">
                   <i class="fas fa-share-alt"></i>
                 </div>
                 <h3 class="social-title text-gradient-accent">Connect With Me</h3>
-                <p class="social-subtitle">Follow me on social media for updates</p>
+                <p class="social-subtitle">Let's stay connected and share ideas</p>
               </div>
               
               <div class="social-links">
-                <a href="https://github.com/avinashkumar2rock" target="_blank" class="social-link github">
-                  <i class="fab fa-github"></i>
-                  <span>GitHub</span>
+                <a 
+                  *ngFor="let social of contactInfo.socialLinks" 
+                  [href]="social.url" 
+                  target="_blank" 
+                  class="social-link"
+                  [class]="getSocialLinkClass(social.platform)"
+                  (mouseenter)="onSocialHover(social.platform)"
+                  (mouseleave)="onSocialLeave()"
+                >
+                  <div class="social-icon-wrapper">
+                    <i [class]="social.icon"></i>
+                    <div class="icon-glow"></div>
+                  </div>
+                  <div class="social-content">
+                    <span class="social-platform">{{ social.platform }}</span>
+                    <span class="social-handle">{{ social.handle }}</span>
+                  </div>
+                  <div class="social-hover-effect"></div>
+                  <div class="social-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
                 </a>
-                <a href="https://linkedin.com/in/avinashkumar2rock" target="_blank" class="social-link linkedin">
-                  <i class="fab fa-linkedin"></i>
-                  <span>LinkedIn</span>
-                </a>
-                <a href="mailto:avinashkumar2rock&#64;gmail.com" class="social-link email">
-                  <i class="fas fa-envelope"></i>
-                  <span>Email</span>
-                </a>
-                <a href="tel:+917071955977" class="social-link phone">
-                  <i class="fas fa-phone"></i>
-                  <span>Phone</span>
-                </a>
+              </div>
+
+              <div class="social-stats">
+                <div class="stat-item">
+                  <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                  </div>
+                  <div class="stat-content">
+                    <span class="stat-value">500+</span>
+                    <span class="stat-label">Connections</span>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-icon">
+                    <i class="fas fa-code-branch"></i>
+                  </div>
+                  <div class="stat-content">
+                    <span class="stat-value">100+</span>
+                    <span class="stat-label">Repositories</span>
+                  </div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <div class="stat-content">
+                    <span class="stat-value">1k+</span>
+                    <span class="stat-label">Stars</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Success Message -->
-      <div class="success-message" [class.show]="showSuccessMessage">
-        <div class="success-content">
-          <i class="fas fa-check-circle"></i>
-          <h4>Message Sent Successfully!</h4>
-          <p>Thank you for reaching out. I'll get back to you soon.</p>
+      <!-- Loading state -->
+      <div class="loading-container" *ngIf="!personalInfo || !contactInfo">
+        <div class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>Loading contact information...</p>
         </div>
       </div>
     </div>
@@ -233,9 +271,15 @@ import { FormsModule } from '@angular/forms';
     .header-section {
       margin-bottom: var(--space-3xl);
       padding: var(--space-xl);
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.03);
       border-radius: var(--radius-2xl);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all var(--transition-normal);
+    }
+
+    .header-section:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
     }
 
     .profile-section {
@@ -261,6 +305,11 @@ import { FormsModule } from '@angular/forms';
       background: var(--gradient-primary);
       padding: 3px;
       box-shadow: var(--shadow-xl);
+      transition: all var(--transition-normal);
+    }
+
+    .profile-img:hover {
+      transform: scale(1.05);
     }
 
     .profile-ring {
@@ -314,6 +363,16 @@ import { FormsModule } from '@angular/forms';
       position: relative;
       overflow: hidden;
       height: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all var(--transition-normal);
+    }
+
+    .form-card:hover, .info-card:hover, .social-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
     }
 
     .form-card::before {
@@ -366,6 +425,7 @@ import { FormsModule } from '@angular/forms';
       color: var(--white-color);
       font-size: var(--text-xl);
       box-shadow: var(--shadow-lg);
+      transition: all var(--transition-normal);
     }
 
     .info-icon {
@@ -374,6 +434,10 @@ import { FormsModule } from '@angular/forms';
 
     .social-icon {
       background: var(--gradient-accent);
+    }
+
+    .form-icon:hover, .info-icon:hover, .social-icon:hover {
+      transform: scale(1.05);
     }
 
     .form-title, .info-title, .social-title {
@@ -423,12 +487,12 @@ import { FormsModule } from '@angular/forms';
     .form-control {
       width: 100%;
       padding: var(--space-md) var(--space-lg);
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: var(--radius-lg);
       color: var(--white-color);
       font-size: var(--text-sm);
-      transition: var(--transition-normal);
+      transition: all var(--transition-normal);
       position: relative;
       font-family: 'Inter', sans-serif;
     }
@@ -442,7 +506,7 @@ import { FormsModule } from '@angular/forms';
       outline: none;
       border-color: var(--primary-color);
       box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.12);
       transform: translateY(-2px);
     }
 
@@ -477,10 +541,15 @@ import { FormsModule } from '@angular/forms';
       font-size: var(--text-base);
       font-weight: 600;
       cursor: pointer;
-      transition: var(--transition-normal);
+      transition: all var(--transition-normal);
       position: relative;
       overflow: hidden;
       margin-top: var(--space-lg);
+    }
+
+    .btn-send:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
     }
 
     .contact-details {
@@ -493,13 +562,15 @@ import { FormsModule } from '@angular/forms';
       align-items: center;
       gap: var(--space-lg);
       padding: var(--space-lg);
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.05);
       border-radius: var(--radius-lg);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all var(--transition-normal);
     }
 
     .contact-item:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
       box-shadow: var(--shadow-lg);
     }
 
@@ -515,6 +586,11 @@ import { FormsModule } from '@angular/forms';
       font-size: var(--text-lg);
       flex-shrink: 0;
       box-shadow: var(--shadow-md);
+      transition: all var(--transition-normal);
+    }
+
+    .contact-item:hover .contact-item-icon {
+      transform: scale(1.05);
     }
 
     .contact-item-content h4 {
@@ -528,6 +604,7 @@ import { FormsModule } from '@angular/forms';
       color: var(--accent-color);
       text-decoration: none;
       font-size: var(--text-sm);
+      transition: all var(--transition-fast);
     }
 
     .contact-link:hover {
@@ -542,92 +619,234 @@ import { FormsModule } from '@angular/forms';
 
     .social-links {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: var(--space-lg);
+      margin-bottom: var(--space-2xl);
     }
 
     .social-link {
       display: flex;
       align-items: center;
-      gap: var(--space-md);
-      padding: var(--space-lg);
+      gap: var(--space-lg);
+      padding: var(--space-xl);
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-xl);
       color: var(--gray-200);
       text-decoration: none;
-      font-weight: 600;
       position: relative;
       overflow: hidden;
+      transition: all var(--transition-normal);
     }
 
     .social-link:hover {
-      color: var(--white-color);
-      box-shadow: var(--shadow-xl);
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.08);
       border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
-    .social-link i {
-      font-size: var(--text-lg);
-      width: 20px;
-      text-align: center;
+    .social-icon-wrapper {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: all var(--transition-normal);
     }
 
-    .social-link span {
-      font-weight: 600;
-      font-size: var(--text-sm);
+    .social-link:hover .social-icon-wrapper {
+      transform: scale(1.1);
+      background: var(--gradient-accent);
     }
 
-    .success-message {
-      position: fixed;
+    .social-icon-wrapper i {
+      font-size: var(--text-xl);
+      color: var(--white-color);
+      transition: all var(--transition-normal);
+    }
+
+    .icon-glow {
+      position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(30px);
-      border-radius: var(--radius-2xl);
-      padding: var(--space-2xl);
-      text-align: center;
-      z-index: 1000;
-      transition: var(--transition-bounce);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: var(--shadow-3xl);
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+      opacity: 0;
+      transition: all var(--transition-normal);
     }
 
-    .success-message.show {
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .success-content i {
-      font-size: var(--text-6xl);
-      color: var(--success-color);
-      margin-bottom: var(--space-xl);
+    .social-link:hover .icon-glow {
+      opacity: 1;
       animation: pulse 2s infinite;
     }
 
-    .success-content h4 {
-      color: var(--white-color);
-      margin-bottom: var(--space-md);
-      font-size: var(--text-2xl);
-      font-weight: 700;
+    .social-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
     }
 
-    .success-content p {
-      color: var(--gray-300);
-      margin: 0;
+    .social-platform {
+      font-weight: 600;
       font-size: var(--text-lg);
+      color: var(--white-color);
     }
 
-    @media (max-width: 1200px) {
-      .profile-section {
-        gap: var(--space-xl);
-      }
+    .social-handle {
+      font-size: var(--text-sm);
+      color: var(--gray-400);
+    }
 
-      .col-lg-12 {
-        margin-bottom: var(--space-xl);
+    .social-arrow {
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all var(--transition-normal);
+      color: var(--accent-color);
+    }
+
+    .social-link:hover .social-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .social-hover-effect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .social-link:hover .social-hover-effect {
+      transform: translateX(100%);
+    }
+
+    .social-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      padding-top: var(--space-xl);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--radius-lg);
+      transition: all var(--transition-normal);
+    }
+
+    .stat-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--gradient-accent);
+      color: var(--white-color);
+      font-size: var(--text-lg);
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+      transition: all var(--transition-normal);
+    }
+
+    .stat-item:hover .stat-icon {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .stat-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .stat-value {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--white-color);
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: var(--text-sm);
+      color: var(--gray-400);
+    }
+
+    /* Platform-specific styles */
+    .social-link.github {
+      border-color: rgba(36, 41, 46, 0.3);
+    }
+
+    .social-link.github:hover {
+      background: rgba(36, 41, 46, 0.2);
+      border-color: rgba(36, 41, 46, 0.5);
+    }
+
+    .social-link.linkedin {
+      border-color: rgba(0, 119, 181, 0.3);
+    }
+
+    .social-link.linkedin:hover {
+      background: rgba(0, 119, 181, 0.2);
+      border-color: rgba(0, 119, 181, 0.5);
+    }
+
+    .social-link.email {
+      border-color: rgba(234, 67, 53, 0.3);
+    }
+
+    .social-link.email:hover {
+      background: rgba(234, 67, 53, 0.2);
+      border-color: rgba(234, 67, 53, 0.5);
+    }
+
+    .social-link.phone {
+      border-color: rgba(52, 168, 83, 0.3);
+    }
+
+    .social-link.phone:hover {
+      background: rgba(52, 168, 83, 0.2);
+      border-color: rgba(52, 168, 83, 0.5);
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.5;
       }
     }
 
+    /* Responsive design */
     @media (max-width: 768px) {
       .profile-section {
         flex-direction: column;
@@ -666,11 +885,19 @@ import { FormsModule } from '@angular/forms';
 
       .social-links {
         grid-template-columns: 1fr;
-        gap: var(--space-md);
+      }
+
+      .social-stats {
+        grid-template-columns: 1fr;
       }
 
       .social-link {
-        padding: var(--space-md);
+        padding: var(--space-lg);
+      }
+
+      .social-icon-wrapper {
+        width: 40px;
+        height: 40px;
       }
 
       .container-fluid {
@@ -713,7 +940,7 @@ import { FormsModule } from '@angular/forms';
     }
   `]
 })
-export class ContactComponent {
+export class ContactComponent implements OnInit, OnDestroy {
   contact = {
     name: '',
     email: '',
@@ -723,6 +950,28 @@ export class ContactComponent {
 
   isSubmitting = false;
   showSuccessMessage = false;
+
+  personalInfo: PersonalInfo | null = null;
+  contactInfo: ContactInfo | null = null;
+
+  private destroy$ = new Subject<void>();
+
+  constructor(private portfolioService: PortfolioService) {}
+
+  ngOnInit() {
+    this.portfolioService.getPersonalInfo().pipe(takeUntil(this.destroy$)).subscribe(info => {
+      this.personalInfo = info;
+    });
+
+    this.portfolioService.getContactInfo().pipe(takeUntil(this.destroy$)).subscribe(info => {
+      this.contactInfo = info;
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   onSubmit() {
     if (this.isSubmitting) return;
@@ -751,5 +1000,19 @@ export class ContactComponent {
         this.showSuccessMessage = false;
       }, 3000);
     }, 2000);
+  }
+
+  onSocialHover(platform: string) {
+    // Add hover animation logic here if needed
+    console.log(`Hovering over ${platform}`);
+  }
+
+  onSocialLeave() {
+    // Add leave animation logic here if needed
+    console.log('Left social link');
+  }
+
+  getSocialLinkClass(platform: string): string {
+    return platform.toLowerCase();
   }
 }

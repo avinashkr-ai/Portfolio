@@ -40,6 +40,12 @@ export interface Project {
   status: string;
 }
 
+export interface AcademicProject {
+  title: string;
+  description: string;
+  technologies: string[];
+}
+
 export interface Education {
   id: number;
   degree: string;
@@ -47,7 +53,11 @@ export interface Education {
   location: string;
   duration: string;
   grade: string;
+  gradeType: string;
   description: string;
+  coursework: string[];
+  achievements: string[];
+  projects: AcademicProject[];
 }
 
 export interface Certification {
@@ -56,6 +66,8 @@ export interface Certification {
   issuer: string;
   year: string;
   description: string;
+  type: string;
+  skills: string[];
 }
 
 export interface Skill {
@@ -74,6 +86,7 @@ export interface SocialLink {
   platform: string;
   url: string;
   icon: string;
+  handle: string;
 }
 
 export interface ContactInfo {
@@ -244,13 +257,14 @@ export class PortfolioService {
    */
   searchProjectsByTechnology(technology: string): Observable<Project[]> {
     return this.portfolioData$.pipe(
-      map(data => 
-        data?.projects.filter(project => 
+      map(data => {
+        if (!data?.projects) return [];
+        return data.projects.filter(project => 
           project.technologies.some(tech => 
             tech.toLowerCase().includes(technology.toLowerCase())
           )
-        ) || []
-      )
+        );
+      })
     );
   }
 
@@ -260,20 +274,15 @@ export class PortfolioService {
   getAllTechnologies(): Observable<string[]> {
     return this.portfolioData$.pipe(
       map(data => {
-        if (!data) return [];
-        
-        const allTechs = data.projects.reduce((techs: string[], project) => {
-          return [...techs, ...project.technologies];
-        }, []);
-        
-        // Remove duplicates and sort
+        if (!data?.projects) return [];
+        const allTechs = data.projects.flatMap(project => project.technologies);
         return [...new Set(allTechs)].sort();
       })
     );
   }
 
   /**
-   * Refresh portfolio data (useful for development)
+   * Refresh data (reload from source)
    */
   refreshData(): void {
     this.dataLoaded = false;

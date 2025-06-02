@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PortfolioService, Skills, Skill } from '../../services/portfolio.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-skills',
@@ -12,67 +15,31 @@ import { CommonModule } from '@angular/common';
         <p class="page-subtitle">My expertise across various technologies and frameworks</p>
       </div>
 
-      <div class="skills-grid">
+      <div class="skills-grid" *ngIf="skills">
         <div class="skill-category card shadow-glow">
           <div class="category-header">
             <div class="category-icon">
               <i class="fas fa-code"></i>
             </div>
             <h3 class="category-title text-gradient-primary">Languages & Frameworks</h3>
-          </div>
+                </div>
           <div class="skills-list">
-            <div class="skill-item">
+            <div class="skill-item" *ngFor="let skill of skills.languages">
               <div class="skill-info">
-                <span class="skill-name">Angular</span>
-                <span class="skill-percentage">90%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 90%"></div>
-              </div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">TypeScript</span>
-                <span class="skill-percentage">85%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 85%"></div>
-              </div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">JavaScript</span>
-                <span class="skill-percentage">88%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 88%"></div>
-              </div>
-                </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">Python</span>
-                <span class="skill-percentage">92%</span>
+                <span class="skill-name">{{ skill.name }}</span>
+                <span class="skill-percentage">{{ skill.proficiency }}%</span>
                 </div>
               <div class="skill-bar">
-                <div class="skill-progress" style="width: 92%"></div>
+                <div class="skill-progress" [style.width.%]="skill.proficiency"></div>
               </div>
                 </div>
-            <div class="skill-item">
+            <div class="skill-item" *ngFor="let skill of skills.frameworks">
               <div class="skill-info">
-                <span class="skill-name">Django</span>
-                <span class="skill-percentage">90%</span>
-                </div>
-              <div class="skill-bar">
-                <div class="skill-progress" style="width: 90%"></div>
+                <span class="skill-name">{{ skill.name }}</span>
+                <span class="skill-percentage">{{ skill.proficiency }}%</span>
               </div>
-                </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">HTML/CSS</span>
-                <span class="skill-percentage">95%</span>
-                </div>
               <div class="skill-bar">
-                <div class="skill-progress" style="width: 95%"></div>
+                <div class="skill-progress" [style.width.%]="skill.proficiency"></div>
               </div>
             </div>
           </div>
@@ -84,60 +51,15 @@ import { CommonModule } from '@angular/common';
               <i class="fas fa-server"></i>
             </div>
             <h3 class="category-title text-gradient-secondary">Backend & APIs</h3>
-          </div>
+                </div>
           <div class="skills-list">
-            <div class="skill-item">
+            <div class="skill-item" *ngFor="let skill of skills.backend">
               <div class="skill-info">
-                <span class="skill-name">Django REST Framework</span>
-                <span class="skill-percentage">88%</span>
+                <span class="skill-name">{{ skill.name }}</span>
+                <span class="skill-percentage">{{ skill.proficiency }}%</span>
               </div>
               <div class="skill-bar">
-                <div class="skill-progress secondary" style="width: 88%"></div>
-              </div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">Flask</span>
-                <span class="skill-percentage">85%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress secondary" style="width: 85%"></div>
-              </div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">Node.js</span>
-                <span class="skill-percentage">80%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress secondary" style="width: 80%"></div>
-              </div>
-                </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">MySQL</span>
-                <span class="skill-percentage">85%</span>
-                </div>
-              <div class="skill-bar">
-                <div class="skill-progress secondary" style="width: 85%"></div>
-              </div>
-                </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">PostgreSQL</span>
-                <span class="skill-percentage">82%</span>
-                </div>
-              <div class="skill-bar">
-                <div class="skill-progress secondary" style="width: 82%"></div>
-              </div>
-                </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">RESTful APIs</span>
-                <span class="skill-percentage">90%</span>
-                </div>
-              <div class="skill-bar">
-                <div class="skill-progress secondary" style="width: 90%"></div>
+                <div class="skill-progress secondary" [style.width.%]="skill.proficiency"></div>
               </div>
             </div>
           </div>
@@ -149,86 +71,26 @@ import { CommonModule } from '@angular/common';
               <i class="fas fa-cloud"></i>
             </div>
             <h3 class="category-title text-gradient-accent">Cloud & Deployment</h3>
-          </div>
+                </div>
           <div class="skills-list">
-            <div class="skill-item">
+            <div class="skill-item" *ngFor="let skill of skills.cloud">
               <div class="skill-info">
-                <span class="skill-name">Firebase</span>
-                <span class="skill-percentage">88%</span>
+                <span class="skill-name">{{ skill.name }}</span>
+                <span class="skill-percentage">{{ skill.proficiency }}%</span>
               </div>
               <div class="skill-bar">
-                <div class="skill-progress accent" style="width: 88%"></div>
-              </div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">Azure</span>
-                <span class="skill-percentage">75%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress accent" style="width: 75%"></div>
-              </div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">Heroku</span>
-                <span class="skill-percentage">80%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress accent" style="width: 80%"></div>
-              </div>
-                </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">Git/GitHub</span>
-                <span class="skill-percentage">92%</span>
-                </div>
-              <div class="skill-bar">
-                <div class="skill-progress accent" style="width: 92%"></div>
-              </div>
-                </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">Docker</span>
-                <span class="skill-percentage">70%</span>
-                </div>
-              <div class="skill-bar">
-                <div class="skill-progress accent" style="width: 70%"></div>
-              </div>
-                </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <span class="skill-name">CI/CD</span>
-                <span class="skill-percentage">75%</span>
-                </div>
-              <div class="skill-bar">
-                <div class="skill-progress accent" style="width: 75%"></div>
+                <div class="skill-progress accent" [style.width.%]="skill.proficiency"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="additional-skills">
-        <div class="card">
-          <h3 class="section-title text-gradient-primary">Additional Technologies</h3>
-          <div class="tech-tags">
-            <span class="tech-tag">Bootstrap</span>
-            <span class="tech-tag">Tailwind CSS</span>
-            <span class="tech-tag">RxJS</span>
-            <span class="tech-tag">Chart.js</span>
-            <span class="tech-tag">AOS Animation</span>
-            <span class="tech-tag">Font Awesome</span>
-            <span class="tech-tag">Pandas</span>
-            <span class="tech-tag">NumPy</span>
-            <span class="tech-tag">Folium</span>
-            <span class="tech-tag">JWT</span>
-            <span class="tech-tag">AJAX</span>
-            <span class="tech-tag">WebSockets</span>
-            <span class="tech-tag">AI/ML</span>
-            <span class="tech-tag">OpenAI</span>
-            <span class="tech-tag">Gemini AI</span>
-          </div>
+      <!-- Loading state -->
+      <div class="loading-container" *ngIf="!skills">
+        <div class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>Loading skills data...</p>
         </div>
       </div>
     </div>
@@ -240,34 +102,46 @@ import { CommonModule } from '@angular/common';
 
     .header-section {
       text-align: center;
-      margin-bottom: 4rem;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.02);
+      margin-bottom: var(--space-3xl);
+      padding: var(--space-xl);
+      background: rgba(255, 255, 255, 0.03);
       border-radius: var(--radius-2xl);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all var(--transition-normal);
+    }
+
+    .header-section:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
     }
 
     .page-title {
       font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
       margin-bottom: var(--space-lg);
       font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
     .page-subtitle {
-      font-size: 1.3rem;
+      font-size: 1rem;
       color: var(--gray-300);
       margin: 0;
+      line-height: 1.6;
     }
 
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
+      gap: var(--space-2xl);
+      padding: var(--space-lg);
     }
 
     .skill-category {
-      padding: 2.5rem;
+      padding: var(--space-xl);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-2xl);
+      transition: all var(--transition-normal);
       position: relative;
       overflow: hidden;
     }
@@ -278,8 +152,9 @@ import { CommonModule } from '@angular/common';
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
+      height: 3px;
       background: var(--gradient-primary);
+      opacity: 0.8;
     }
 
     .skill-category:nth-child(2)::before {
@@ -290,25 +165,32 @@ import { CommonModule } from '@angular/common';
       background: var(--gradient-accent);
     }
 
+    .skill-category:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: var(--shadow-xl);
+    }
+
     .category-header {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
     }
 
     .category-icon {
-      width: 70px;
-      height: 70px;
-      border-radius: var(--radius-xl);
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-lg);
       background: var(--gradient-primary);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--white-color);
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       box-shadow: var(--shadow-lg);
-      flex-shrink: 0;
+      transition: all var(--transition-normal);
     }
 
     .skill-category:nth-child(2) .category-icon {
@@ -319,44 +201,51 @@ import { CommonModule } from '@angular/common';
       background: var(--gradient-accent);
     }
 
+    .skill-category:hover .category-icon {
+      transform: scale(1.05);
+    }
+
     .category-title {
-      font-size: 1.6rem;
+      font-size: 1.25rem;
       margin: 0;
+      font-weight: 600;
+      line-height: 1.3;
     }
 
     .skills-list {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: var(--space-lg);
     }
 
     .skill-item {
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
     }
 
     .skill-info {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.75rem;
     }
 
     .skill-name {
-      font-weight: 600;
+      font-weight: 500;
       color: var(--gray-200);
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     .skill-percentage {
-      font-weight: 700;
-      color: var(--accent-color);
-      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      font-size: 0.85rem;
     }
 
     .skill-bar {
       height: 8px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-full);
       overflow: hidden;
       position: relative;
     }
@@ -364,10 +253,9 @@ import { CommonModule } from '@angular/common';
     .skill-progress {
       height: 100%;
       background: var(--gradient-primary);
-      border-radius: var(--radius-lg);
-      transition: width 1s ease-in-out;
+      border-radius: var(--radius-full);
+      transition: width var(--transition-slow);
       position: relative;
-      overflow: hidden;
     }
 
     .skill-progress.secondary {
@@ -378,99 +266,108 @@ import { CommonModule } from '@angular/common';
       background: var(--gradient-accent);
     }
 
-    .additional-skills {
-      margin-top: 3rem;
-    }
-
-    .additional-skills .card {
-      padding: 2.5rem;
-      text-align: center;
-    }
-
-    .section-title {
-      font-size: clamp(var(--text-2xl), 3.5vw, var(--text-4xl));
-      margin-bottom: var(--space-lg);
-      font-weight: 700;
-    }
-
-    .tech-tags {
+    .loading-container {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
       justify-content: center;
+      align-items: center;
+      padding: var(--space-3xl);
     }
 
-    .tech-tag {
+    .loading-spinner {
+      text-align: center;
+      color: var(--gray-400);
+    }
+
+    .loading-spinner i {
+      font-size: 2rem;
+      margin-bottom: var(--space-lg);
+      color: var(--primary-color);
+      animation: spin 1s linear infinite;
+    }
+
+    /* Shadow classes */
+    .shadow-glow {
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
+    }
+
+    .shadow-glow-secondary {
+      box-shadow: 0 4px 20px rgba(6, 182, 212, 0.15);
+    }
+
+    .shadow-glow-accent {
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.15);
+    }
+
+    /* Text gradient classes */
+    .text-gradient-primary {
       background: var(--gradient-primary);
-      color: var(--white-color);
-      padding: 0.75rem 1.5rem;
-      border-radius: var(--radius-lg);
-      font-size: 0.9rem;
-      font-weight: 500;
-      box-shadow: var(--shadow-md);
-      position: relative;
-      overflow: hidden;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .tech-tag:hover {
-      box-shadow: var(--shadow-lg);
-    }
-
-    .tech-tag:nth-child(3n+1) {
-      background: var(--gradient-primary);
-    }
-
-    .tech-tag:nth-child(3n+2) {
+    .text-gradient-secondary {
       background: var(--gradient-secondary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .tech-tag:nth-child(3n+3) {
+    .text-gradient-accent {
       background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
+    /* Animation */
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive design */
     @media (max-width: 768px) {
       .skills-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: var(--space-xl);
+        padding: var(--space-md);
       }
 
       .skill-category {
-        padding: 2rem;
+        padding: var(--space-lg);
       }
 
       .category-header {
         flex-direction: column;
         text-align: center;
-        gap: 1rem;
+        gap: var(--space-md);
       }
 
       .category-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
-      }
-
-      .tech-tags {
-        gap: 0.75rem;
-      }
-
-      .tech-tag {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.85rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .skills-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .skill-info {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
       }
     }
   `]
 })
-export class SkillsComponent {}
+export class SkillsComponent implements OnInit, OnDestroy {
+  skills: Skills | null = null;
+  private destroy$ = new Subject<void>();
+
+  constructor(private portfolioService: PortfolioService) {}
+
+  ngOnInit(): void {
+    this.portfolioService.getSkills()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(skills => {
+        this.skills = skills;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+}
