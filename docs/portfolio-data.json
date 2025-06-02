@@ -294,22 +294,26 @@
       {
         "platform": "GitHub",
         "url": "https://github.com/rock12231",
-        "icon": "fab fa-github"
+        "icon": "fab fa-github",
+        "handle": "@rock12231"
       },
       {
         "platform": "LinkedIn",
         "url": "https://linkedin.com/in/rock1223",
-        "icon": "fab fa-linkedin"
+        "icon": "fab fa-linkedin",
+        "handle": "@rock1223"
       },
       {
         "platform": "Email",
         "url": "mailto:avinashkumar2rock@gmail.com",
-        "icon": "fas fa-envelope"
+        "icon": "fas fa-envelope",
+        "handle": "avinashkumar2rock@gmail.com"
       },
       {
         "platform": "Phone",
         "url": "tel:+917071955977",
-        "icon": "fas fa-phone"
+        "icon": "fas fa-phone",
+        "handle": "+91 7071955977"
       }
     ]
   }
