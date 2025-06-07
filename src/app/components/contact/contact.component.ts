@@ -1,15 +1,18 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PortfolioService, PersonalInfo, ContactInfo } from '../../services/portfolio.service';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TopNavbarComponent],
   template: `
+    <app-top-navbar (sidebarToggle)="toggleSidebar()"></app-top-navbar>
+    
     <div class="contact-container">
       <div class="header-section" *ngIf="personalInfo">
         <div class="profile-section">
@@ -266,22 +269,22 @@ import { takeUntil } from 'rxjs/operators';
         </div>
       </div>
     </div>
-
-    <!-- Mobile Menu Button -->
-    <button class="mobile-menu-btn" (click)="toggleSidebar()">
-      <div class="hamburger-line"></div>
-      <div class="hamburger-line"></div>
-      <div class="hamburger-line"></div>
-    </button>
-
-    <!-- Mobile Menu Toggle Button -->
-    <div class="menu-toggle-btn" (click)="toggleSidebar()">
-      <i class="fas fa-bars"></i>
-    </div>
   `,
   styles: [`
     .contact-container {
-      padding: var(--space-lg) 0;
+      padding-top: 60px; /* Add space for fixed navbar */
+    }
+
+    @media (max-width: 768px) {
+      .contact-container {
+        padding-top: 50px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-container {
+        padding-top: 45px;
+      }
     }
 
     .header-section {
@@ -1171,150 +1174,9 @@ import { takeUntil } from 'rxjs/operators';
     .loading-spinner p {
       font-size: var(--text-sm);
     }
-
-    /* Mobile Menu Button Styles */
-    .mobile-menu-btn {
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-      z-index: 1001;
-      width: 45px;
-      height: 45px;
-      background: var(--gradient-primary);
-      border: none;
-      border-radius: var(--radius-xl);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      cursor: pointer;
-      box-shadow: var(--shadow-lg);
-      transition: all 0.3s ease;
-    }
-
-    .mobile-menu-btn:hover {
-      transform: scale(1.05);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .mobile-menu-btn.active {
-      left: 280px;
-      background: var(--gradient-accent);
-    }
-
-    .mobile-menu-btn.active .hamburger-line:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .mobile-menu-btn.active .hamburger-line:nth-child(2) {
-      opacity: 0;
-    }
-
-    .mobile-menu-btn.active .hamburger-line:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -6px);
-    }
-
-    .hamburger-line {
-      width: 20px;
-      height: 2px;
-      background: var(--white-color);
-      border-radius: var(--radius-full);
-      transition: all 0.3s ease;
-    }
-
-    /* Mobile Menu Toggle Button */
-    .menu-toggle-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 35px;
-      height: 35px;
-      background: transparent;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: var(--white-color);
-      opacity: 0;
-      transition: all 0.3s ease;
-    }
-
-    .sidebar:not(.collapsed) .menu-toggle-btn {
-      opacity: 1;
-    }
-
-    .menu-toggle-btn i {
-      font-size: 1.2rem;
-      transition: transform 0.3s ease;
-    }
-
-    .menu-toggle-btn:hover i {
-      transform: rotate(90deg);
-    }
-
-    /* Mobile Menu Button Animation */
-    @keyframes menuButtonSlide {
-      from {
-        transform: translateX(-100%);
-      }
-      to {
-        transform: translateX(0);
-      }
-    }
-
-    .mobile-menu-btn {
-      animation: menuButtonSlide 0.3s ease forwards;
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      .mobile-menu-btn {
-        width: 40px;
-        height: 40px;
-      }
-
-      .mobile-menu-btn.active {
-        left: 260px;
-      }
-
-      .hamburger-line {
-        width: 18px;
-      }
-
-      .menu-toggle-btn {
-        width: 30px;
-        height: 30px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .mobile-menu-btn {
-        width: 35px;
-        height: 35px;
-        top: 0.75rem;
-        left: 0.75rem;
-      }
-
-      .mobile-menu-btn.active {
-        left: 240px;
-      }
-
-      .hamburger-line {
-        width: 16px;
-      }
-
-      .menu-toggle-btn {
-        width: 28px;
-        height: 28px;
-        top: 0.75rem;
-        right: 0.75rem;
-      }
-    }
   `]
 })
-export class ContactComponent implements OnInit, OnDestroy {
+export class ContactComponent extends BaseComponent {
   contact = {
     name: '',
     email: '',
@@ -1324,28 +1186,25 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   isSubmitting = false;
   showSuccessMessage = false;
-  isSidebarCollapsed = false;
-
   personalInfo: PersonalInfo | null = null;
   contactInfo: ContactInfo | null = null;
 
-  private destroy$ = new Subject<void>();
-
-  constructor(private portfolioService: PortfolioService) {}
-
-  ngOnInit() {
-    this.portfolioService.getPersonalInfo().pipe(takeUntil(this.destroy$)).subscribe(info => {
-      this.personalInfo = info;
-    });
-
-    this.portfolioService.getContactInfo().pipe(takeUntil(this.destroy$)).subscribe(info => {
-      this.contactInfo = info;
-    });
+  constructor(portfolioService: PortfolioService) {
+    super(portfolioService);
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+  protected initializeComponent(): void {
+    this.portfolioService.getPersonalInfo()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(info => {
+        this.personalInfo = info;
+      });
+
+    this.portfolioService.getContactInfo()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(info => {
+        this.contactInfo = info;
+      });
   }
 
   onSubmit() {
@@ -1355,18 +1214,18 @@ export class ContactComponent implements OnInit, OnDestroy {
 
     // Simulate form submission
     setTimeout(() => {
-    console.log('Form submitted:', this.contact);
+      console.log('Form submitted:', this.contact);
 
       // Show success message
       this.showSuccessMessage = true;
 
-    // Reset form
-    this.contact = {
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    };
+      // Reset form
+      this.contact = {
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      };
 
       this.isSubmitting = false;
 
@@ -1378,63 +1237,14 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   onSocialHover(platform: string) {
-    // Add hover animation logic here if needed
     console.log(`Hovering over ${platform}`);
   }
 
   onSocialLeave() {
-    // Add leave animation logic here if needed
     console.log('Left social link');
   }
 
   getSocialLinkClass(platform: string): string {
     return platform.toLowerCase();
-  }
-
-  toggleSidebar() {
-    this.isSidebarCollapsed = !this.isSidebarCollapsed;
-    // You can emit this state to a service or parent component if needed
-    const sidebar = document.querySelector('.sidebar');
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    
-    if (sidebar) {
-      sidebar.classList.toggle('collapsed');
-    }
-    if (mobileMenuBtn) {
-      mobileMenuBtn.classList.toggle('active');
-    }
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    if (window.innerWidth <= 768) {
-      // Auto collapse sidebar on mobile when navigating
-      this.isSidebarCollapsed = true;
-      const sidebar = document.querySelector('.sidebar');
-      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-      
-      if (sidebar) {
-        sidebar.classList.add('collapsed');
-      }
-      if (mobileMenuBtn) {
-        mobileMenuBtn.classList.remove('active');
-      }
-    }
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    // Auto collapse sidebar when clicking outside on mobile
-    if (window.innerWidth <= 768) {
-      const sidebar = document.querySelector('.sidebar');
-      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-      
-      if (sidebar && !sidebar.contains(event.target as Node) && 
-          mobileMenuBtn && !mobileMenuBtn.contains(event.target as Node)) {
-        this.isSidebarCollapsed = true;
-        sidebar.classList.add('collapsed');
-        mobileMenuBtn.classList.remove('active');
-      }
-    }
   }
 }
